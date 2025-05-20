@@ -12,16 +12,30 @@ class Controller:
         self._listCountry = []
 
     def fillDD(self):
-        pass
+        for country in self._model.getDifferentCountry():
+            self._view.ddcountry.options.append(ft.dropdown.Option(country))
+
+        for year in self._model.anni:
+            self._view.ddyear.options.append(ft.dropdown.Option(year))
+
+
 
 
     def handle_graph(self, e):
-        pass
+        anno = int(self._view.ddyear.value) # controlli sull'intero da fare
+        country = self._view.ddcountry.value
+        self._view.txt_result.controls.clear()
+        self._model.buildGraph(country, anno)
+        self._view.txt_result.controls.append(ft.Text(f"grafo creato con {len(self._model._grafo.nodes)} nodi e {len(self._model._grafo.edges)} archi"))
+        self._view.update_page()
 
 
 
     def handle_volume(self, e):
-        pass
+        self._view.txtOut2.controls.clear()
+        for tupla in self._model.getVolume():
+            self._view.txtOut2.controls.append(ft.Text(f"Il volume del retailer {tupla[0]} è {tupla[1]}"))
+        self._view.update_page()
 
 
     def handle_path(self, e):
